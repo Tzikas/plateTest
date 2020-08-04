@@ -4,8 +4,11 @@ let baseURL;
 
 process.env.NODE_ENV === 'production'
   //? (baseURL = 'here should be your production endpoint')
-  ? (baseURL = window.location.origin)
+  ? (baseURL = "https://rocky-ocean-03987.herokuapp.com")
   : (baseURL = 'http://localhost:5000');
+
+
+console.log(process.env)
 
 const service = axios.create({ withCredentials: true, baseURL });
 
