@@ -40,14 +40,34 @@ app.use(
 //   credentials: true
 // }));
 
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: true,
-    secret: "secret",
-    cookie: { maxAge: 1000 * 60 * 60, secure:'auto', sameSite:'none' }
-  })
-);
+
+var sess = {
+  secret: 'keyboard cat',
+  cookie: {}
+}
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
+  sess.sameSite = 'none'
+}
+
+app.use(session(sess))
+
+// app.use(
+//   session({
+//     resave: false,
+//     saveUninitialized: true,
+//     secret: "secret",
+//     cookie: { maxAge: 1000 * 60 * 60 } //, secure:'auto', sameSite:'none' }
+//   })
+// );
+
+// if (app.get('env') === 'production') {
+//   app.set('trust proxy', 1) // trust first proxy
+//   sess.cookie.secure = true // serve secure cookies
+// }
+
 
 app.use(passport.initialize());
 app.use(passport.session());
