@@ -24,28 +24,28 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 const app = express();
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: ["http://localhost:3000", "https://elated-jackson-28b73e.netlify.app"] //Swap this with the client url 
-//   })
-// );
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000", "https://elated-jackson-28b73e.netlify.app"] //Swap this with the client url 
+  })
+);
 
 
-app.use(cors({
-  origin: function(origin, callback){
-    return callback(null, true);
-  },
-  optionsSuccessStatus: 200,
-  credentials: true
-}));
+// app.use(cors({
+//   origin: function(origin, callback){
+//     return callback(null, true);
+//   },
+//   optionsSuccessStatus: 200,
+//   credentials: true
+// }));
 
 app.use(
   session({
     resave: false,
     saveUninitialized: true,
     secret: "secret",
-    cookie: { maxAge: 1000 * 60 * 60 } //, secure:true, sameSite:'none' }
+    cookie: { maxAge: 1000 * 60 * 60, secure:'auto', sameSite:'none' }
   })
 );
 
