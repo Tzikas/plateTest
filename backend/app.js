@@ -71,7 +71,7 @@ let client = path.join(__dirname + '../public/index.html')
 console.log('client',client)
 //app.get('*', (req, res) => res.sendFile(client));
 // For any other routes, redirect to the index.html file of React
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
-// })
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+})
 module.exports = app;
