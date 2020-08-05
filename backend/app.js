@@ -24,21 +24,21 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 const app = express();
 
-app.use(
-  cors({
-    credentials: true,
-    origin: ["http://localhost:3000", "https://elated-jackson-28b73e.netlify.app"] //Swap this with the client url 
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: ["http://localhost:3000", "https://elated-jackson-28b73e.netlify.app"] //Swap this with the client url 
+//   })
+// );
 
 
-// app.use(cors({
-//   origin: function(origin, callback){
-//     return callback(null, true);
-//   },
-//   optionsSuccessStatus: 200,
-//   credentials: true
-// }));
+app.use(cors({
+  origin: function(origin, callback){
+    return callback(null, true);
+  },
+  optionsSuccessStatus: 200,
+  credentials: true
+}));
 
 app.use(
   session({
@@ -71,7 +71,7 @@ let client = path.join(__dirname + '../public/index.html')
 console.log('client',client)
 //app.get('*', (req, res) => res.sendFile(client));
 // For any other routes, redirect to the index.html file of React
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
-})
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+// })
 module.exports = app;
