@@ -46,27 +46,31 @@ app.use(
 // }));
 
 
-var sess = {
-  secret: 'keyboard cat',
-  cookie: {}
-}
+// var sess = {
+//   secret: 'keyboard cat',
+//   cookie: {secure:true, sameSite:'none'},
+//   name: 'nikotest'
+// }
 
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1) // trust first proxy
-  sess.cookie.secure = true // serve secure cookies
-  sess.cookie.sameSite = 'none'
-}
+// if (app.get('env') === 'production') {
+//   app.set('trust proxy', 1) // trust first proxy
+//   sess.cookie.secure = true // serve secure cookies
+//   sess.cookie.sameSite = 'none'
+// }
 
-app.use(session(sess))
+//app.use(session(sess))
 
-// app.use(
-//   session({
-//     resave: false,
-//     saveUninitialized: true,
-//     secret: "secret",
-//     cookie: { maxAge: 1000 * 60 * 60 } //, secure:'auto', sameSite:'none' }
-//   })
-// );
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: true,
+    secret: "secret",
+    name: 'gmorning',
+    cookie: { maxAge: 1000 * 60 * 60, sameSite:'none'} //, secure:true, httpOnly:false, sameSite:'none' }
+  })
+);
+
+console.log("HEYY dont get it Y")
 
 // if (app.get('env') === 'production') {
 //   app.set('trust proxy', 1) // trust first proxy
