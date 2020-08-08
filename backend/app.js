@@ -23,58 +23,25 @@ const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
 const app = express();
+console.log('why')
 
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000", "https://elated-jackson-28b73e.netlify.app"] //Swap this with the client url 
+    origin: ["http://localhost:3000", "http://localhost:5000", "https://elated-jackson-28b73e.netlify.app"] //Swap this with the client url 
+  })
+)
+
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: true,
+    secret: "secret",
+    name: 'gmorning',
+    cookie: { maxAge: 1000 * 60 * 60, sameSite:'none'} //, secure:true, httpOnly:false, sameSite:'none' }
   })
 );
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "https://elated-jackson-28b73e.netlify.app"); // update to match the domain you will make the request from
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
-// app.use(cors({
-//   origin: function(origin, callback){
-//     return callback(null, true);
-//   },
-//   optionsSuccessStatus: 200,
-//   credentials: true
-// }));
-
-
-var sess = {
-  secret: 'keyboard cat',
-  cookie: { maxAge: 1000 * 60 * 60, sameSite:'none'} ,
-  name: 'nikotest'
-}
-
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1) // trust first proxy
-  sess.cookie.secure = true // serve secure cookies
-}
-
-app.use(session(sess))
-
-// app.use(
-//   session({
-//     resave: false,
-//     saveUninitialized: true,
-//     secret: "secret",
-//     name: 'gmorning',
-//     cookie: { maxAge: 1000 * 60 * 60, sameSite:'none'} //, secure:true, httpOnly:false, sameSite:'none' }
-//   })
-// );
-
-console.log("HEYY dont get it Y")
-
-// if (app.get('env') === 'production') {
-//   app.set('trust proxy', 1) // trust first proxy
-//   sess.cookie.secure = true // serve secure cookies
-// }
 
 
 app.use(passport.initialize());
@@ -91,15 +58,17 @@ app.use(logger('dev'));
 
 const index = require('./routes/index');
 const auth = require('./routes/auth');
-app.use('/', index);
-app.use('/', auth);
+app.use('/api', index);
+app.use('/api', auth);
 
 // Uncomment this line for production
-let client = path.join(__dirname + '../public/index.html')
-console.log('client',client)
-//app.get('*', (req, res) => res.sendFile(client));
+// let client = path.join(__dirname + '../public/index.html')
+// console.log('client peanut',client)
+
+// app.get('*', (req, res) => res.sendFile(client));
 // For any other routes, redirect to the index.html file of React
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
-// })
+app.get('*', (req, res, next) => {
+  console.log('hit')
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+})
 module.exports = app;
