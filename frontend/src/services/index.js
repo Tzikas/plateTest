@@ -3,7 +3,7 @@ let baseURL;
 console.log(process.env)
 process.env.NODE_ENV === 'production'
   // ? (baseURL = 'https://sheltered-dawn-07708.herokuapp.com')
-  ? (baseURL = 'https://rocky-ocean-03987.herokuapp.com/api')
+  ? (baseURL = '/api') //https://rocky-ocean-03987.herokuapp.com/
   : (baseURL = 'http://localhost:5000/api');
 
 const service = axios.create({ withCredentials: true, baseURL });
